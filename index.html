@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+    <head>
+     <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Bowlby+One" rel="stylesheet">
+		<link rel="stylesheet" href="leaflet/leaflet.css" />
+        <link rel="stylesheet" href="leaflet-search/src/leaflet-search.css" />
+        
+        <script src="leaflet/leaflet.js"></script>
+        <script src="leaflet-search/src/leaflet-search.js"></script>
+        <link href="style.css" rel="stylesheet" type="text/css">
+        
+		<link rel="stylesheet" href="MarkerCluster/MarkerCluster.css" />
+        <link rel="stylesheet" href="MarkerCluster/MarkerCluster.Default.css" />        	
+		<script src="MarkerCluster/leaflet.markercluster.js"></script>
+        
+        <link rel="stylesheet" href="noUiSlider/nouislider.min.css" />
+		<script src="noUiSlider/nouislider.min.js"></script>                      
+
+        <script src="wNumb/wNumb.js"></script>
+        
+        <script src="data/metanastes.js"></script>        
+        
+   <style>
+			body {
+				padding: 0;
+				margin: 0;
+                 background-image: url("black_denim.jpg");
+			}
+			html, body, #map {
+				height: 95%;
+			}
+		</style>     
+        
+    </head>
+    <body>
+       
+           
+    
+
+<script>
+               
+
+</script>
+       
+		<div id="slider" style="top: 50px; right: 1px; margin: 10px 25px;"></div>
+        
+		<div hidden style="position: relative; margin-right: auto; margin-left: auto; width: 90%; top: 70px; text-align: center;">
+		<input type="number" min='1950' max='1975' id="input-number-min">
+		<input type="number" min='1950' max='1975' id="input-number-max">
+		</div>
+        
+        
+        <div id="label" style="position: relative; top: 70px;">
+        <p id="period"></p>
+        </div>
+        
+        <div id="video" style="position: relative; top: 75px;">        
+        <input id="btnvideo" type="button" value="Play Video" onclick="timeout(0);" />              
+        </div>
+        
+		<div id="map" style="position: relative; top: 85px;"></div>
+        
+        <script>
+        
+        var minyear = 1950;
+        var maxyear = 1975;
+        var playing = false;
+        
+        //var i =0;
+        function timeout(i) {
+            
+        
+           document.getElementById("btnvideo").value= "Playing...";         
+            
+            if (playing==true&&i==0){
+                return;
+            }; 
+
+            var newyear = minyear+i
+            if (newyear>1975){
+            playing = false;
+            document.getElementById("btnvideo").value= "Play Video";       
+            return;};
+            setTimeout(function () {
+                
+                // Do Something Here
+                // Then recall the parent function to
+                // create a recursive loop.
+                slidervar.noUiSlider.set([minyear, minyear+i]);        //  your code here
+                i =i+1;
+                playing = true;
+                timeout(i);
+            }, 500);
+        }
+
+     
+     
+                
+        var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+			'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+	    var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light', attribution: mbAttr}),
+		streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr});
+        
+                
+                
+        //base map
+		var map = L.map('map', {
+			zoomControl:true,
+            maxZoom:18,
+            layers: [streets]
+		});
+       // .fitBounds([[25,-130],[52,-60]]);
+         //(-73.636030, 45.489072) - (-73.581940, 45.532321)
+		var basemap_0 = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png');
+		
+        //basemap_0.addTo(map);
+        
+        var basemap_1 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+           })
+        //basemap_1.addTo(map);
+
+        //layer
+        
+		function pop_prot(feature, layer) {
+			var popupContent = 'Name: ' + String(feature.properties['Name']);
+			layer.bindPopup(popupContent);
+		}
+		function protecland_marker(feature, latlng) {
+			return L.circleMarker(latlng, {
+				radius: 4.0,
+				fillColor: '#ff531a',
+				color: '#1a1a00',
+				weight: 1,
+				opacity: 1.0,
+				fillOpacity: 0.5
+			})
+		}
+		
+        //var protecland = new L.geoJson(exp_ne10mparksandprotectedlandspoint,{
+		//	//onEachFeature: pop_prot,
+		//	pointToLayer: protecland_marker
+		//});		
+        //protecland.addTo(map);
+        
+        
+       // ************* mylayer  *******************************
+       
+       //var geocodedlayer = new L.geoJson(exp_geocodingshape,{
+       //     onEachFeature: pop_prot,
+
+		//	pointToLayer: protecland_marker
+		//});
+     //   geocodedlayer.addTo(map);
+        
+		
+        function pop_popplaces(feature, layer) {
+			//var popupContent = 'name: ' + String(feature.properties['name']) + '<br>pop_max: ' + String(feature.properties['pop_max']);
+            var popupContent = 'Name: ' + String(feature.properties['Name']) + "<br>"+
+           "Date_start:" + + String(feature.properties['Date_st'])  + "<br>"+
+           "Date_start:" + + String(feature.properties['Date_end'])  + "<br>";
+			layer.bindPopup(popupContent);
+            
+            
+            
+		}
+		
+        function popplaces_marker(feature, latlng) {
+			return L.circleMarker(latlng, {
+				radius: 4.0,
+				fillColor: '#ff0000',
+				color: '#000066',
+				weight: 1,
+				opacity: 1.0,
+				fillOpacity: 0.8
+			})
+		}
+        
+		var popplaces = new L.geoJson(exp_popplaces,{
+			onEachFeature: pop_popplaces,
+			pointToLayer: popplaces_marker
+		});
+        
+		var cluster_popplaces= new L.MarkerClusterGroup(
+        {   
+            spiderfyDistanceMultiplier:2, //see discussion https://github.com/Leaflet/Leaflet.markercluster/issues/431
+            showCoverageOnHover: true,
+            maxClusterRadius: 20,
+            disableClusteringAtZoom:18, 
+            chunkedLoading: true,
+            chunkInterval: 500
+        }
+        );
+		cluster_popplaces.addLayer(popplaces);
+		cluster_popplaces.addTo(map);
+        map.fitBounds(cluster_popplaces.getBounds());
+        
+
+        
+       var baseLayers = {
+		"Grayscale": grayscale,
+		"Streets": streets
+	};
+		var baseMaps = {'OSM Black & White': basemap_0,'OSM': basemap_1};
+		controler = L.control.layers(baseLayers,{"places": cluster_popplaces},{collapsed:false}).addTo(map);
+        
+        
+        cluster_popplaces.on('mouseover', function(e) {
+          //open popup;
+          var popup = L.popup()
+           .setLatLng(e.latlng) 
+           .setContent("Name: " + e.layer.feature.properties.Name + "<br>"+
+            "Date_start:" + e.layer.feature.properties.Date_st + "<br>"+
+           "Date_end:" + e.layer.feature.properties.Date_end + "<br>"
+         
+           )
+           .openOn(map);
+        });
+
+
+        
+        
+        
+        var slidervar = document.getElementById('slider');
+        slidervar.style.height = '10px';
+        //range.style.margin = '0 auto 30px';
+        slidervar.style.margin = '0 70px 30px';
+                noUiSlider.create(slidervar, {
+                    connect: true,
+                    behaviour: 'tap-drag', // Move handle on tap, bar is draggable
+            step: 1,
+
+        format: wNumb({
+            decimals: 0
+        }),
+        tooltips: true,
+                start: [ minyear, maxyear ],
+                range: {
+                    min: minyear,
+                    max: maxyear
+                },
+          pips: { // Show a scale with the slider
+            mode: 'steps',
+            stepped: true,
+            density: 8
+        }
+            });
+		
+        
+        document.getElementById('input-number-min').setAttribute("value", minyear);	        
+        document.getElementById('input-number-max').setAttribute("value", maxyear);
+        
+        
+		var inputNumberMin = document.getElementById('input-number-min');
+		var inputNumberMax = document.getElementById('input-number-max');
+        
+        
+		inputNumberMin.addEventListener('change', function(){
+			slidervar.noUiSlider.set([this.value, null]);
+		});
+        
+		inputNumberMax.addEventListener('change', function(){
+			slidervar.noUiSlider.set([null, this.value]);
+		});
+
+        //set initial date range
+       // slidervar.noUiSlider.set([1960, 1961]);
+        
+		slidervar.noUiSlider.on('update', function( values, handle ) {            
+			// console.log(handle);
+			if (handle==0){
+				 document.getElementById('input-number-min').value = values[0];
+			} else {
+				document.getElementById('input-number-max').value =  values[1];
+			}
+			//rangeMin = document.getElementById('input-number-min').value;
+			//rangeMax = document.getElementById('input-number-max').value;
+            
+            rangeMin = slider.noUiSlider.get()[0];
+			rangeMax = slider.noUiSlider.get()[1];
+            
+			//first let's clear the layer:
+			cluster_popplaces.clearLayers();
+			//and repopulate it
+			popplaces = new L.geoJson(exp_popplaces,{
+				onEachFeature: pop_popplaces,
+				filter:
+					function(feature, layer) {
+						 return (feature.properties.Date_end <= rangeMax) && (feature.properties.Date_st >= rangeMin); 
+					},
+				pointToLayer: popplaces_marker
+			})
+			//console.log(map.getBounds().getEast());
+			//and back again into the cluster group
+			cluster_popplaces.addLayer(popplaces);      
+            
+            if (rangeMin==rangeMax){
+            document.getElementById("period").innerHTML = "Data for year:"+ rangeMin + ", (Points:" + cluster_popplaces.getLayers().length + ")" ;
+            
+            }        else {
+            document.getElementById("period").innerHTML = "Data for period:" +rangeMin+ "-"+ rangeMax + ", (Points:" + cluster_popplaces.getLayers().length + ")" ;
+            }
+            
+            
+            
+        
+		 });
+	</script>
+
+</body>
+</html>
