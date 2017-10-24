@@ -56,7 +56,7 @@
         </div>
         
         <div id="video" style="position: relative; top: 75px;">        
-        <input id="btnvideo" type="button" value="Play Video" onclick="timeout(0);" />              
+        <input id="btnvideo" type="button" value="Play Video" onclick="timeout(0,true);" />              
         </div>
         
 		<div id="map" style="position: relative; top: 85px;"></div>
@@ -65,33 +65,45 @@
         
         var minyear = 1950;
         var maxyear = 1975;
-        var playing = false;
+        millsecs = 500;
+        var pause = true;
         
-        //var i =0;
-        function timeout(i) {
-            
-        
-           document.getElementById("btnvideo").value= "Playing...";         
-            
-            if (playing==true&&i==0){
-                return;
-            }; 
+        function tooglebuttonstate(){            
+            if (pause==false){
+                pause=true;
+                }
+            else{
+                pause=false;                
+            };                               
+        };
 
-            var newyear = minyear+i
-            if (newyear>1975){
-            playing = false;
-            document.getElementById("btnvideo").value= "Play Video";       
-            return;};
-            setTimeout(function () {
-                
-                // Do Something Here
-                // Then recall the parent function to
-                // create a recursive loop.
-                slidervar.noUiSlider.set([minyear, minyear+i]);        //  your code here
-                i =i+1;
-                playing = true;
-                timeout(i);
-            }, 500);
+        function timeout(i,clickme) {
+             
+             if (clickme==true){
+                document.getElementById("btnvideo").value= "Stop Video";  
+                tooglebuttonstate(); 
+             };            
+
+            
+            if (pause==true){    
+                document.getElementById("btnvideo").value= "Replay Video";             
+                return;
+            };        
+            if (pause==false){                         
+                             
+                    var newyear = minyear+i
+                    ///when display all years, exit
+                    if (newyear>maxyear){                        
+                        document.getElementById("btnvideo").value= "Play Video";       
+                        return;
+                    };
+                    
+                    setTimeout(function () {
+                        slidervar.noUiSlider.set([minyear, minyear+i]);  
+                        i =i+1;
+                        timeout(i,false);//recursive call    
+                        }, millsecs);
+            };             
         }
 
      
@@ -249,42 +261,17 @@
             density: 8
         }
             });
-		
-        
-        document.getElementById('input-number-min').setAttribute("value", minyear);	        
-        document.getElementById('input-number-max').setAttribute("value", maxyear);
-        
-        
-		var inputNumberMin = document.getElementById('input-number-min');
-		var inputNumberMax = document.getElementById('input-number-max');
-        
-        
-		inputNumberMin.addEventListener('change', function(){
-			slidervar.noUiSlider.set([this.value, null]);
-		});
-        
-		inputNumberMax.addEventListener('change', function(){
-			slidervar.noUiSlider.set([null, this.value]);
-		});
 
-        //set initial date range
-       // slidervar.noUiSlider.set([1960, 1961]);
         
 		slidervar.noUiSlider.on('update', function( values, handle ) {            
-			// console.log(handle);
-			if (handle==0){
-				 document.getElementById('input-number-min').value = values[0];
-			} else {
-				document.getElementById('input-number-max').value =  values[1];
-			}
-			//rangeMin = document.getElementById('input-number-min').value;
-			//rangeMax = document.getElementById('input-number-max').value;
+
             
             rangeMin = slider.noUiSlider.get()[0];
 			rangeMax = slider.noUiSlider.get()[1];
             
 			//first let's clear the layer:
 			cluster_popplaces.clearLayers();
+            
 			//and repopulate it
 			popplaces = new L.geoJson(exp_popplaces,{
 				onEachFeature: pop_popplaces,
@@ -304,10 +291,8 @@
             }        else {
             document.getElementById("period").innerHTML = "Data for period:" +rangeMin+ "-"+ rangeMax + ", (Points:" + cluster_popplaces.getLayers().length + ")" ;
             }
-            
-            
-            
-        
+                        
+ 
 		 });
 	</script>
 
