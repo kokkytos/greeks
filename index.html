@@ -307,7 +307,7 @@
 				onEachFeature: pop_popplaces,
 				filter:
 					function(feature, layer) {
-						 return (feature.properties.Date_end <= rangeMax) && (feature.properties.Date_st >= rangeMin); 
+						 return (feature.properties.Date_st <= rangeMax) && (feature.properties.Date_end >= rangeMin); 
 					},
 				pointToLayer: popplaces_marker
 			})
