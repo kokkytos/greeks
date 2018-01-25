@@ -26,9 +26,11 @@
     <script src="MarkerCluster/leaflet.markercluster.js"></script>
 
     <link rel="stylesheet" href="noUiSlider/nouislider.min.css" />
+        <script src="data/settings.js"></script>
     <script src="noUiSlider/nouislider.min.js"></script>
 
     <script src="wNumb/wNumb.js"></script>
+
 
     <script src="data/metanastes.js"></script>
 
@@ -93,9 +95,9 @@
 
 
     <script>
-        var minyear = 1950;
-        var maxyear = 1975;
-        millsecs = 500;
+        var minyear = period.minYear;
+        var maxyear = period.maxYear;
+        millsecs = 1200;
         var pause = true;
 
         function tooglebuttonstate() {
@@ -172,11 +174,6 @@
 
         //layer
 
-        function pop_prot(feature, layer) {
-            var popupContent = 'Name: ' + String(feature.properties['Name']);
-            layer.bindPopup(popupContent);
-        }
-
         function protecland_marker(feature, latlng) {
             return L.circleMarker(latlng, {
                 radius: 4.0,
@@ -190,18 +187,6 @@
 
 
 
-
-        function pop_popplaces(feature, layer) {
-            //var popupContent = 'name: ' + String(feature.properties['name']) + '<br>pop_max: ' + String(feature.properties['pop_max']);
-            var popupContent = 'Name: ' + String(feature.properties['Name']) + "<br>" +
-                "Date_start:" + +String(feature.properties['Date_st']) + "<br>" +
-                "Date_start:" + +String(feature.properties['Date_end']) + "<br>";
-            layer.bindPopup(popupContent);
-
-
-
-        }
-
         function popplaces_marker(feature, latlng) {
             return L.circleMarker(latlng, {
                 radius: 4.0,
@@ -213,8 +198,8 @@
             })
         }
 
-        var popplaces = new L.geoJson(exp_popplaces, {
-            onEachFeature: pop_popplaces,
+        var popplaces = new L.geoJson(greeks_pois, {
+            //onEachFeature: pop_popplaces,
             pointToLayer: popplaces_marker
         });
 
@@ -230,31 +215,33 @@
         cluster_popplaces.addTo(map);
         map.fitBounds(cluster_popplaces.getBounds());
 
+       
 
+       var baseLayers = {
+           "Grayscale": grayscale,
+           "Streets" : streets
+       };
 
-        var baseLayers = {
-            "Grayscale": grayscale,
-            "Streets": streets
-        };
+	
         var baseMaps = {
             'OSM Black & White': basemap_0,
             'OSM': basemap_1
         };
         controler = L.control.layers(baseLayers, {
-            "places": cluster_popplaces
+	"Places" : cluster_popplaces
+
         }, {
             collapsed: false
         }).addTo(map);
-
 
         cluster_popplaces.on('mouseover', function(e) {
             //open popup;
             var popup = L.popup()
                 .setLatLng(e.latlng)
-                .setContent("Name: " + e.layer.feature.properties.Name + "<br>" +
-                    "Date_start:" + e.layer.feature.properties.Date_st + "<br>" +
-                    "Date_end:" + e.layer.feature.properties.Date_end + "<br>" +
-                    "Address:" + e.layer.feature.properties.Full_Addre + "<br>"
+                .setContent(labels.popName + ": " + e.layer.feature.properties.Name + "<br>" +
+                    labels.popDateSt + ": " + e.layer.feature.properties.Date_st + "<br>" +
+                    labels.popDateEnd + ": " + e.layer.feature.properties.Date_end + "<br>" +
+                    labels.popAddress + ": " + e.layer.feature.properties.Full_Addre + "<br>"
                 )
                 .openOn(map);
         });
@@ -298,8 +285,8 @@
             cluster_popplaces.clearLayers();
 
             //and repopulate it
-            popplaces = new L.geoJson(exp_popplaces, {
-                onEachFeature: pop_popplaces,
+            popplaces = new L.geoJson(greeks_pois, {
+                //onEachFeature: pop_popplaces,
                 filter: function(feature, layer) {
                     return (feature.properties.Date_st <= rangeMax) && (feature.properties.Date_end >= rangeMin);
                 },
@@ -310,10 +297,10 @@
             cluster_popplaces.addLayer(popplaces);
 
             if (rangeMin == rangeMax) {
-                document.getElementById("period").innerHTML = "Data for year:" + rangeMin + ", (Points:" + cluster_popplaces.getLayers().length + ")";
+                document.getElementById("period").innerHTML = labels.datayear + rangeMin + ", (Points:" + cluster_popplaces.getLayers().length + ")";
 
             } else {
-                document.getElementById("period").innerHTML = "Data for period:" + rangeMin + "-" + rangeMax + ", (Points:" + cluster_popplaces.getLayers().length + ")";
+                document.getElementById("period").innerHTML = labels.dataperiod + rangeMin + "-" + rangeMax + ", (" + labels.points + cluster_popplaces.getLayers().length + ")";
             }
 
 
