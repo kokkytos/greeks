@@ -8072,7 +8072,6 @@ var greeks_pois =  {
 { "type": "Feature", "properties": { "Name": "Klavdianos, A.", "Date_st": 1974, "Date_end": 1975, "Full_Addre": "1309 Rue Bernard O., Montreal, QC" }, "geometry": { "type": "Point", "coordinates": [ -73.609738405999963, 45.51903457800006 ] } },
 { "type": "Feature", "properties": { "Name": "Philippakis, John", "Date_st": 1966, "Date_end": 1969, "Full_Addre": "405 Chemin de la Cote-Sainte-Catherine, Montreal, QC" }, "geometry": { "type": "Point", "coordinates": [ -73.606427506999978, 45.515368575000025 ] } },
 { "type": "Feature", "properties": { "Name": "Patsalis, Athanasios", "Date_st": 1966, "Date_end": 1969, "Full_Addre": "601 Chemin de la Cote-Sainte-Catherine, Montreal, QC" }, "geometry": { "type": "Point", "coordinates": [ -73.612634093999986, 45.513363110000057 ] } },
-{ "type": "Feature", "properties": { "Name": "Vasconcelos, Aurelio", "Date_st": 1966, "Date_end": 1969, "Full_Addre": "707 Chemin de la Cote-Sainte-Catherine, Montreal, QC" }, "geometry": { "type": "Point", "coordinates": [ -73.615978581999968, 45.511465687000054 ] } },
-{ "type": "Feature", "properties": { "Name": "Athens Tavern", "Date_st": 1965, "Date_end": 1970, "Full_Addre": "1001 Avenue du Mont-Royal O., Montreal, QC" }, "geometry": { "type": "Point", "coordinates": [ -73.579735239999934, 45.527463932000046 ] } }
+{ "type": "Feature", "properties": { "Name": "Vasconcelos, Aurelio", "Date_st": 1966, "Date_end": 1969, "Full_Addre": "707 Chemin de la Cote-Sainte-Catherine, Montreal, QC" }, "geometry": { "type": "Point", "coordinates": [ -73.615978581999968, 45.511465687000054 ] } }
 ]
 }
