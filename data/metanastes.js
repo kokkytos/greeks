@@ -8072,8 +8072,6 @@ var greeks_pois =  {
 { "type": "Feature", "properties": { "Name": "Klavdianos, A.", "Date_st": 1974, "Date_end": 1975, "Full_Addre": "1309 Rue Bernard O., Montreal, QC" }, "geometry": { "type": "Point", "coordinates": [ -73.609738405999963, 45.51903457800006 ] } },
 { "type": "Feature", "properties": { "Name": "Philippakis, John", "Date_st": 1966, "Date_end": 1969, "Full_Addre": "405 Chemin de la Cote-Sainte-Catherine, Montreal, QC" }, "geometry": { "type": "Point", "coordinates": [ -73.606427506999978, 45.515368575000025 ] } },
 { "type": "Feature", "properties": { "Name": "Patsalis, Athanasios", "Date_st": 1966, "Date_end": 1969, "Full_Addre": "601 Chemin de la Cote-Sainte-Catherine, Montreal, QC" }, "geometry": { "type": "Point", "coordinates": [ -73.612634093999986, 45.513363110000057 ] } },
-{ "type": "Feature", "properties": { "Name": "Vasconcelos, Aurelio", "Date_st": 1966, "Date_end": 1969, "Full_Addre": "707 Chemin de la Cote-Sainte-Catherine, Montreal, QC" }, "geometry": { "type": "Point", "coordinates": [ -73.615978581999968, 45.511465687000054 ] } },
-
 
 { "type": "Feature", "properties": { "Name": "Mantzaris, K.", "Date_st": "1974", "Date_end": "1975", "Full_Addre": "6930 Avenue Querbes" }, "geometry": { "type": "Point", "coordinates": [ -73.6202262, 45.5274368 ] } },
 { "type": "Feature", "properties": { "Name": "Milidaki, N.", "Date_st": "1974", "Date_end": "1975", "Full_Addre": "6976 Avenue Querbes" }, "geometry": { "type": "Point", "coordinates": [ -73.6209718, 45.5275577 ] } },
@@ -15472,7 +15470,7 @@ var greeks_pois =  {
 { "type": "Feature", "properties": { "Name": "Meutacou, J.M.", "Date_st": "1961", "Date_end": "1961", "Full_Addre": "6976 Avenue Querbes" }, "geometry": { "type": "Point", "coordinates": [ -73.6209718, 45.5275577 ] } },
 { "type": "Feature", "properties": { "Name": "Calcanis, Geo.", "Date_st": "1961", "Date_end": "1961", "Full_Addre": "7234 Avenue Querbes" }, "geometry": { "type": "Point", "coordinates": [ -73.6240942, 45.5285678 ] } },
 { "type": "Feature", "properties": { "Name": "Yuknanis, Anthony", "Date_st": "1961", "Date_end": "1962", "Full_Addre": "7240 Avenue Querbes" }, "geometry": { "type": "Point", "coordinates": [ -73.6242289, 45.5285238 ] } },
-{ "type": "Feature", "properties": { "Name": "Caras, Nick", "Date_st": "1961", "Date_end": "1961", "Full_Addre": "7424 Avenue Quebes" }, "geometry": { "type": "Point", "coordinates": [ -73.6060721, 45.6321835 ] } },
+{ "type": "Feature", "properties": { "Name": "Caras, Nick", "Date_st": "1961", "Date_end": "1961", "Full_Addre": "7424 Avenue Querbes" }, "geometry": { "type": "Point", "coordinates": [ -73.6060721, 45.6321835 ] } },
 { "type": "Feature", "properties": { "Name": "Halmagyi, Szabolos", "Date_st": "1961", "Date_end": "1961", "Full_Addre": "7430 Avenue Querbes" }, "geometry": { "type": "Point", "coordinates": [ -73.6260918, 45.5291336 ] } },
 { "type": "Feature", "properties": { "Name": "Karageorga, Geo.", "Date_st": "1961", "Date_end": "1961", "Full_Addre": "7602 Avenue Querbes" }, "geometry": { "type": "Point", "coordinates": [ -73.628207099999983, 45.5297912 ] } },
 { "type": "Feature", "properties": { "Name": "Kragegna, Geo.", "Date_st": "1962", "Date_end": "1962", "Full_Addre": "7602 Avenue Querbes" }, "geometry": { "type": "Point", "coordinates": [ -73.628207099999983, 45.5297912 ] } },
