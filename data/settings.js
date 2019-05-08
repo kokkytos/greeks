@@ -8,7 +8,7 @@ var period={
     grayscale: "Grayscale",
     streets: "Streets",
     datayear: "Data for year: ",
-    dataperiod:"Data for period: ",
+    dataperiod:"Greek households with a telephone landline: ",
     points: "Points:" ,
     popName: "Name",
     popDateSt:"Date Start",

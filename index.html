@@ -163,6 +163,11 @@
             layers: [streets]
         });
 
+//'Licensed by &copy; <a href="some_link", class="your_class"> Copyright: ImmiGrec research project-Eleni Gadolou </a>'
+map.attributionControl.addAttribution('Copyright: ImmiGrec research project-Eleni Gadolou');
+
+        //layer
+
         var basemap_0 = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png');
 
 
@@ -172,7 +177,7 @@
         })
 
 
-        //layer
+
 
         function protecland_marker(feature, latlng) {
             return L.circleMarker(latlng, {
